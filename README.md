@@ -1,78 +1,78 @@
-# VertexLearn AI — MVP (MERN Stack)
+# VertexLearn AI
 
-An AI-assisted Learning Management System MVP built with MongoDB, Express, React, and Node.js.
+An AI-assisted Learning Management System (LMS) built with the MERN stack (MongoDB, Express, React, Node.js).
 
-## What's implemented (fully working, real data)
+## Features
 
 | Feature | How it works |
-|---|---|
-| Auth | Register/login with JWT, passwords hashed with bcrypt |
-| Course catalog | 6 seeded courses across categories (AI, Web Dev, Databases, Networks, Cloud), with search, category filter pills, difficulty filter, and sorting |
-| Enrollment & progress | Per-student progress tracking stored in `Enrollment` — lessons completed and quiz scores are real, persisted data |
-| Automated assessment | Multiple-choice quizzes auto-graded server-side the instant a student submits (`/api/quizzes/:id/submit`) |
-| AI Tutor | A rule-based chatbot (`/api/tutor/ask`) answering common MERN/LMS questions — swap this route for a real LLM API call later without touching the frontend |
-| Streaks | A genuine day-based login streak (`streakDays` on the `User` model), computed server-side from real login activity — not a fake counter |
-| XP | Derived honestly from real quiz scores (10 XP per correct answer), calculated client-side from actual `Enrollment` data |
-| Notifications | Built from real enrollment/quiz activity, not scripted fake content — shows an honest empty state if you haven't done anything yet |
+| --- | --- |
+| Authentication | Register and login with JWT; passwords hashed with bcrypt |
+| Course catalog | 6 seeded courses with search, category filters, difficulty filter, and sorting |
+| Enrollment and progress | Per-student lesson progress and quiz scores stored in MongoDB |
+| Quizzes | Multiple-choice quizzes auto-graded on the server at submission |
+| AI Tutor | Rule-based chatbot (`/api/tutor/ask`); can be replaced with an LLM API call without changing the frontend |
+| Streaks | Day-based login streak computed server-side |
+| XP | Calculated from real quiz scores (10 XP per correct answer) |
+| Notifications | Generated from real enrollment and quiz activity |
 
-## What's a "Coming soon" placeholder (and why)
+## Roadmap (placeholder pages)
 
-The AI Study Planner, Community/Discussion Forum, Instructor Studio, and Admin Management pages exist as real routes in the app (so the navigation and footer links all work), but show a "Coming soon" message rather than fake functionality. These are genuinely multi-week features — a real AI study planner needs an LLM integration and scheduling logic, a community forum needs moderation and real-time infrastructure, and instructor/admin tools need a whole second permission system. Building fake versions of these would misrepresent what's actually working.
+AI Study Planner, Community Forum, Instructor Studio, and Admin Management exist as routes and show a "Coming soon" message. They are planned features and are not implemented yet.
 
-**Being upfront in your submission is a strength, not a weakness** — say explicitly which parts are fully functional vs. roadmap items. It shows you understand the difference between a demo and a production system, which reads far better to reviewers than overclaiming.
+## Tech Stack
 
-## Project structure
+- Frontend: React, Vite
+- Backend: Node.js, Express
+- Database: MongoDB Atlas (Mongoose)
+- Auth: JSON Web Tokens, bcrypt
+
+## Project Structure
 
 ```
 vertexlearn-ai/
-  backend/          Express API + MongoDB (Mongoose)
-    models/         User, Course, Quiz, Enrollment
-    routes/         auth, courses, quizzes, enrollments, tutor
-    middleware/      JWT auth check
-    seed.js          Populates 2 sample courses + quizzes
+  backend/
+    models/        User, Course, Quiz, Enrollment
+    routes/        auth, courses, quizzes, enrollments, tutor
+    middleware/    JWT auth check
+    utils/         streak logic
+    seed.js        seeds 6 courses and 3 quizzes
     server.js
-  frontend/         React app (Vite)
-    src/pages/       Login, Register, Dashboard, CourseDetail, Quiz
-    src/components/  Navbar, ProgressBar, ChatTutor
+  frontend/
+    src/pages/       Login, Register, Dashboard, CourseDetail, Quiz, ComingSoon
+    src/components/  Navbar, Footer, NotificationBell, ProgressBar, ChatTutor
 ```
 
-## Setup (do this in order)
+## Setup
 
-### 0. Install prerequisites
-- Node.js (v18+): https://nodejs.org
-- A MongoDB database — easiest is a free MongoDB Atlas cluster: https://www.mongodb.com/cloud/atlas/register
-  - Create a free cluster → Database Access (create a user/password) → Network Access (allow access from anywhere, `0.0.0.0/0`, for now) → "Connect" → "Drivers" → copy the connection string.
+Requirements: Node.js 18+ and a free MongoDB Atlas cluster.
 
-### 1. Backend
-```bash
+### Backend
+
+```
 cd backend
 npm install
-cp .env.example .env
-# open .env and paste your MongoDB connection string into MONGO_URI
-# set JWT_SECRET to any random long string
-npm run seed     # creates 2 sample courses + quizzes
-npm run dev       # starts the API on http://localhost:5000
+copy .env.example .env      (on Mac/Linux: cp .env.example .env)
 ```
 
-### 2. Frontend (in a new terminal)
-```bash
+Open `.env` and set `MONGO_URI` to your Atlas connection string and `JWT_SECRET` to any long random string. Then:
+
+```
+npm run seed
+npm run dev
+```
+
+The API runs on http://localhost:5000.
+
+### Frontend (new terminal)
+
+```
 cd frontend
 npm install
-npm run dev       # starts the app on http://localhost:5173
+npm run dev
 ```
 
-Open http://localhost:5173, register an account, and you'll see the seeded courses.
+Open http://localhost:5173, register an account, and browse the courses.
 
-## What to submit to your internship portal
+## Author
 
-1. **Code**: push this whole folder to a GitHub repo (public or with the reviewer added as a collaborator).
-2. **README**: this file already explains setup + what's implemented — keep it.
-3. **Screenshots**: register/login screen, dashboard with courses, a lesson page, the quiz result, the AI tutor chat.
-4. **Short write-up** (2-3 sentences per section): Tech stack used, features implemented, what you'd add with more time (real AI model integration, instructor dashboard, video lessons, discussion forums).
-5. Optional but impressive: deploy it — backend on Render/Railway (free tier), frontend on Vercel/Netlify — and submit the live link too.
-
-## Two-day build order (if you're doing this yourself instead of just running it)
-
-**Day 1** — Get backend running locally, seed data, test all API routes with a tool like Postman/Thunder Client, then build Login/Register/Dashboard pages.
-
-**Day 2** — Build CourseDetail + Quiz pages, wire up the AI Tutor widget, do a full click-through test, take screenshots, write the README notes, push to GitHub, submit.
+MOHAMMAD AKMAL , B.E. Artificial Intelligence and Machine Learning, P.A. College of Engineering, Mangaluru
